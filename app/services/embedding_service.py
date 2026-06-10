@@ -1,43 +1,26 @@
 from sentence_transformers import SentenceTransformer
-
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 class EmbeddingService:
+    def __init__(self):
+        self.model = SentenceTransformer('BAAI/bge-m3')
+        self.splitter = RecursiveCharacterTextSplitter(
+            chunk_size=500,
+            chunk_overlap=100,
+            separators=["\n\n", "\n", ".", "،", " "]
+        )
 
-    _model = None
+    def embed(self, texts: list[str]) -> list[list[float]]:
+        return self.model.encode(texts, normalize_embeddings=True).tolist()
 
-    @classmethod
-    def model(cls):
-
-        if cls._model is None:
-
-            cls._model = SentenceTransformer(
-                "intfloat/multilingual-e5-large"
-            )
-
-        return cls._model
-
-    @classmethod
-    def embed_passage(
-        cls,
-        text: str,
-    ):
-
-        text = f"passage: {text}"
-
-        return cls.model().encode(
-            text,
-            normalize_embeddings=True,
-        ).tolist()
-
-    @classmethod
-    def embed_query(
-        cls,
-        text: str,
-    ):
-
-        text = f"query: {text}"
-
-        return cls.model().encode(
-            text,
-            normalize_embeddings=True,
-        ).tolist()
+    def split_pages(self, pages: list[dict]) -> list[dict]:
+        chunks = []
+        for page in pages:
+            splits = self.splitter.split_text(page["text"])
+            for split in splits:
+                if len(split.strip()) > 30:
+                    chunks.append({
+                        "text": split,
+                        "page": page["page"]
+                    })
+        return chunks

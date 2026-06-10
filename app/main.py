@@ -1,21 +1,11 @@
-from contextlib import asynccontextmanager
-
 from fastapi import FastAPI
+from app.routers import books, query
 
-from app.core.qdrant import (
-    create_collection,
-)
+app = FastAPI(title="Book Service", description="سرویس پردازش کتاب درسی")
 
+app.include_router(books.router, prefix="/books", tags=["books"])
+app.include_router(query.router, prefix="/query", tags=["query"])
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-
-    create_collection()
-
-    yield
-
-
-app = FastAPI(
-    title="School Books RAG",
-    lifespan=lifespan,
-)
+@app.get("/health")
+def health():
+    return {"status": "ok"}

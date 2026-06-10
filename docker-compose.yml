@@ -1,42 +1,23 @@
-services:
+version: '3.9'
 
+services:
   api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: school-rag-api
-    restart: unless-stopped
+    build: .
     ports:
       - "8000:8000"
     volumes:
-      - .:/app
+      - ./data/uploads:/app/uploads
     environment:
-      QDRANT_HOST: qdrant
-      QDRANT_PORT: 6333
-      OLLAMA_HOST: http://ollama:11434
+      - QDRANT_HOST=qdrant
+      - OLLAMA_HOST=host.docker.internal  # Ollama روی هاست اجرا میشه
     depends_on:
       - qdrant
-      - ollama
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   qdrant:
     image: qdrant/qdrant:latest
-    container_name: school-rag-qdrant
-    restart: unless-stopped
     ports:
       - "6333:6333"
-      - "6334:6334"
     volumes:
-      - qdrant_data:/qdrant/storage
-
-  ollama:
-    image: ollama/ollama:latest
-    container_name: school-rag-ollama
-    restart: unless-stopped
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-
-volumes:
-  qdrant_data:
-  ollama_data:
+      - ./data/qdrant:/qdrant/storage
