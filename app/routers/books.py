@@ -24,7 +24,8 @@ async def upload_book(file: UploadFile = File(...)):
     # پردازش
     pages = ocr.pdf_to_text_chunks(path)
     chunks = embedder.split_pages(pages)
-    embeddings = embedder.embed([c["text"] for c in chunks])
+  
+    embeddings = await embedder.embed([c["text"] for c in chunks])
 
     store.create_collection(book_id)
     store.store_chunks(book_id, chunks, embeddings)
