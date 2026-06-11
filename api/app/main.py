@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from app.routers import books, query
+from api.app.routers import books
+from api.app.routers import query
 
 app = FastAPI(title="Book Service", description="سرویس پردازش کتاب درسی")
 
