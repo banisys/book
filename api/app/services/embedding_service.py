@@ -13,9 +13,16 @@ class EmbeddingService:
         )
 
     async def embed(self, texts: list[str]) -> list[list[float]]:
-        async with httpx.AsyncClient(timeout=60) as client:
-            response = await client.post(self.url, json={"texts": texts})
-            return response.json()["embeddings"]
+        batch_size = 32
+        all_embeddings = []
+
+        async with httpx.AsyncClient(timeout=300) as client:
+            for i in range(0, len(texts), batch_size):
+                batch = texts[i:i + batch_size]
+                response = await client.post(self.url, json={"texts": batch})
+                all_embeddings.extend(response.json()["embeddings"])
+
+        return all_embeddings
 
     def split_pages(self, pages: list[dict]) -> list[dict]:
         chunks = []

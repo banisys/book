@@ -2,15 +2,27 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
-# Virtual Environment
-.venv/
+*.egg-info/
+.Python
 venv/
 env/
+.venv/
+
+# Docker volumes & data
+data/uploads/*
+data/qdrant/*
+!data/uploads/.gitkeep
+!data/qdrant/.gitkeep
+
+# Environment
+.env
+.env.local
 
 # IDE
-.idea/
 .vscode/
+.idea/
+*.swp
+*.swo
 
 # OS
 .DS_Store
@@ -19,57 +31,7 @@ Thumbs.db
 # Logs
 *.log
 
-# Environment Variables
-.env
-.env.*
-
-# Pytest
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Mypy
-.mypy_cache/
-
-# Ruff
-.ruff_cache/
-
-# Build
-build/
-dist/
-*.egg-info/
-
-# Docker
-docker-compose.override.yml
-
-# Application Storage
-storage/books/*
-!storage/books/.gitkeep
-
-# Qdrant Data
-qdrant_data/
-.qdrant/
-
-# Ollama Models
-ollama_data/
-
-# Hugging Face Cache
-.huggingface/
-cache/
-hf_cache/
-
-# Torch Cache
-.torch/
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Temporary Files
-tmp/
-temp/
-*.tmp
-
-# Local Databases
-*.db
-*.sqlite
-*.sqlite3
+# Model files (downloaded during build)
+*.bin
+*.safetensors
+*.gguf
