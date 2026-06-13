@@ -33,8 +33,9 @@ class VectorStore:
         self.client.upsert(collection_name=book_id, points=points)
 
     def search(self, book_id: str, query_vector: list, top_k: int = 5):
-        return self.client.search(
+        result = self.client.query_points(
             collection_name=book_id,
-            query_vector=query_vector,
+            query=query_vector,
             limit=top_k
         )
+        return result.points

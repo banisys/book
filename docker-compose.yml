@@ -6,20 +6,23 @@ services:
 
   api:
     image: alighasempoor/book-api:latest
+    env_file:
+      - .env
     ports:
       - "8000:8000"
     volumes:
       - ./data/uploads:/app/uploads
-      - ./api/app:/app/app   # ← این خط اضافه شد
+      - ./api/app:/app/app
     environment:
       - QDRANT_HOST=qdrant
       - EMBEDDER_HOST=embedder
-      - OLLAMA_HOST=host.docker.internal
+      - OLLAMA_HOST=172.17.0.1
     depends_on:
       - qdrant
       - embedder
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    network_mode: "host"  
 
   qdrant:
     image: qdrant/qdrant:latest

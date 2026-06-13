@@ -1,8 +1,8 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
-from api.app.models.schemas import BookUploadResponse
-from api.app.services.ocr_service import OCRService
-from api.app.services.embedding_service import EmbeddingService
-from api.app.services.vector_store import VectorStore
+from app.models.schemas import BookUploadResponse
+from app.services.ocr_service import OCRService
+from app.services.embedding_service import EmbeddingService
+from app.services.vector_store import VectorStore
 import shutil, os, uuid
 
 router = APIRouter()

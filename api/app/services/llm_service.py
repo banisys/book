@@ -5,7 +5,7 @@ class LLMService:
     def __init__(self):
         host = os.getenv("OLLAMA_HOST", "localhost")
         self.base_url = f"http://{host}:11434"
-        self.model = "qwen2.5:7b"
+        self.model = os.getenv("LLM_MODEL", "qwen2.5:7b")
 
     async def generate(self, context: str, question: str) -> str:
         prompt = f"""تو یک دستیار آموزشی هستی. بر اساس متن زیر از کتاب درسی، به سوال پاسخ بده.

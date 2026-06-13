@@ -15,7 +15,7 @@ data/qdrant/*
 !data/qdrant/.gitkeep
 
 # Environment
-.env
+# .env
 .env.local
 
 # IDE
@@ -35,3 +35,4 @@ Thumbs.db
 *.bin
 *.safetensors
 *.gguf
+
