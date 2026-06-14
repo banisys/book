@@ -7,7 +7,7 @@ services:
     #     - sail
 
   api:
-    image: alighasempoor/book-api:latest
+    image: alighasempoor/api:latest
     env_file:
       - .env
     ports:
