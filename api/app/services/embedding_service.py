@@ -29,7 +29,7 @@ class EmbeddingService:
         for page in pages:
             splits = self.splitter.split_text(page["text"])
             for split in splits:
-                if len(split.strip()) > 30:
+                if len(split.strip()) > 5:  # از 30 به 5 تغییر کرد
                     chunks.append({
                         "text": split,
                         "page": page["page"]
