@@ -3,11 +3,9 @@ services:
     build: ./embedder
     ports:
       - "8001:8001"
-    # networks:
-    #     - sail
 
   api:
-    image: alighasempoor/api:latest
+    image: alighasempoor/my-image2:latest
     env_file:
       - .env
     ports:
@@ -24,9 +22,6 @@ services:
       - embedder
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    # networks:
-    #     - sail      
-
 
   qdrant:
     image: qdrant/qdrant:latest
@@ -34,9 +29,3 @@ services:
       - "6333:6333"
     volumes:
       - ./data/qdrant:/qdrant/storage  
-    # networks:
-    #     - sail
-
-# networks:
-#     sail:
-#         driver: bridge

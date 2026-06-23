@@ -7,4 +7,3 @@ pytesseract
 qdrant-client
 httpx
 langchain-text-splitters
-easyocr

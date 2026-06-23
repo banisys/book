@@ -14,3 +14,13 @@ class QueryRequest(BaseModel):
 class QueryResponse(BaseModel):
     answer: str
     source_pages: list[int]
+
+
+class AddTextRequest(BaseModel):
+    book_id: str
+    page: int
+    text: str
+
+class DeletePageRequest(BaseModel):
+    book_id: str
+    page: int

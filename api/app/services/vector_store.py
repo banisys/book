@@ -1,6 +1,6 @@
 from qdrant_client import QdrantClient
 from qdrant_client.models import (
-    Distance, VectorParams, PointStruct
+    Distance, VectorParams, PointStruct, Filter, FieldCondition, MatchValue
 )
 import uuid
 import os
@@ -39,3 +39,13 @@ class VectorStore:
             limit=top_k
         )
         return result.points
+    
+
+    def delete_by_page(self, book_id: str, page: int) -> bool:
+        result = self.client.delete(
+            collection_name=book_id,
+            points_selector=Filter(
+                must=[FieldCondition(key="page", match=MatchValue(value=page))]
+            )
+        )
+        return result.status == "completed"
